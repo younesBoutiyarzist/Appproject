@@ -128,11 +128,11 @@ class Avatar:
             self.moustacheR.move_down(pos, speed)
 
 
-    def rotation(self, sens, speed=1):
-        if sens == 1:
-            self.angle += 1
-        if sens == 0:
-            self.angle -= 1
+    def rotation(self, sens, angle,  speed=1):
+        if sens == 1 and angle < self.angle :
+            self.angle -= speed
+        if sens == 0 and angle >self.angle :
+            self.angle += speed
     
     def center_y(self, speed=0):
         if self.eyeR.rect.x - self.eyeR.x_origine > 0:
@@ -145,6 +145,15 @@ class Avatar:
             self.translation_x(0, 0, speed)
         else :
             self.translation_x(1, 0, speed)
+
+    def center_z(self, speed=0):
+        if self.angle > speed + 1:
+            self.angle -= speed
+        elif self.angle < -speed - 1:
+            self.angle += speed
+        else :
+            self.angle = 0
+        
 
 
        
