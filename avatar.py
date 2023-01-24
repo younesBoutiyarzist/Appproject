@@ -13,6 +13,8 @@ class Avatar:
     def __init__(self):
 
         self.angle = 0
+        self.scale_x = 1.0
+        self.action = None
 
         # eye L
         self.eyeL = Eye()
@@ -24,6 +26,7 @@ class Avatar:
         self.eyeL.rect.y = 255
         self.eyeL.x_origine = self.eyeL.rect.x 
         self.eyeL.y_origine = self.eyeL.rect.y 
+        
 
         # eye R
         self.eyeR = Eye()
@@ -42,8 +45,8 @@ class Avatar:
         self.earL.image = pygame.transform.scale(self.earL.image, (128, 200))
         self.earL.origine = self.earL.image 
         self.earL.rect = self.earL.image.get_rect()
-        self.earL.rect.x = 135
-        self.earL.rect.y = 45
+        self.earL.rect.x = 160
+        self.earL.rect.y = 70
         self.earL.x_origine = self.earL.rect.x 
         self.earL.y_origine = self.earL.rect.y 
 
@@ -53,8 +56,8 @@ class Avatar:
         self.earR.image = pygame.transform.scale(self.earR.image, (128, 200))
         self.earR.origine = self.earR.image 
         self.earR.rect = self.earR.image.get_rect()
-        self.earR.rect.x = 380
-        self.earR.rect.y = 50
+        self.earR.rect.x = 360
+        self.earR.rect.y = 75
         self.earR.x_origine = self.earR.rect.x 
         self.earR.y_origine = self.earR.rect.y 
 
@@ -97,20 +100,29 @@ class Avatar:
 
     def translation_y(self, sens, pos, speed=0):
         if sens == 1:
-            self.eyeL.move_right(pos, speed)
-            self.eyeR.move_right(pos, speed)
+            self.action = 'translation_y_sens1'
+            self.eyeL.move_right(pos + 2, speed)
+            self.eyeR.move_right(pos + 2, speed)
             self.mouth.move_right(pos, speed)
-            self.crown.move_right(pos, speed)
-            self.moustacheL.move_right(pos, speed)
-            self.moustacheR.move_right(pos, speed)
+            self.crown.move_right(pos/3, speed/3)
+            self.moustacheL.move_right(pos + 3, speed + 1)
+            self.moustacheR.move_right(pos - 3, speed -1)
+            if self.eyeR.rect.x < self.eyeR.x_origine + pos :
+                self.earL.move_left(pos/2, speed/2)
+                self.earR.move_left(pos/2, speed/2)
+            
         elif sens == 0:
+            self.action = 'translation_y_sens0'
             self.eyeL.move_left(pos, speed)
             self.eyeR.move_left(pos, speed)
             self.mouth.move_left(pos, speed)
-            self.crown.move_left(pos, speed)
-            self.moustacheL.move_left(pos, speed)
-            self.moustacheR.move_left(pos, speed)
-
+            self.crown.move_left(pos/3, speed/3)
+            self.moustacheL.move_left(pos - 3, speed)
+            self.moustacheR.move_left(pos + 3, speed)
+            if self.eyeR.rect.x > self.eyeR.x_origine + pos :
+                self.earL.move_right(pos/2, speed/2)
+                self.earR.move_right(pos/2, speed/2)
+            
     def translation_x(self, sens, pos, speed=0):
         if sens == 1:
             self.eyeL.move_up(pos, speed)
@@ -119,14 +131,24 @@ class Avatar:
             self.moustacheL.move_up(pos, speed)
             self.moustacheR.move_up(pos, speed)
             self.crown.move_up(pos, speed)
+            if self.eyeR.rect.y > self.eyeR.y_origine + pos :
+                self.earR.move_down(pos/2, speed/2)
+                self.earL.move_down(pos/2, speed/2)
+            
+            
+
         elif sens == 0:
+            
             self.eyeL.move_down(pos, speed)
             self.eyeR.move_down(pos, speed)
             self.mouth.move_down(pos, speed)
             self.crown.move_down(pos, speed)
             self.moustacheL.move_down(pos, speed)
             self.moustacheR.move_down(pos, speed)
-
+            if self.eyeR.rect.y < self.eyeR.y_origine + pos :
+                self.earR.move_up(pos/2, speed/2)
+                self.earL.move_up(pos/2, speed/2)
+            self.action = 'translation_x_sens0'
 
     def rotation(self, sens, angle,  speed=1):
         if sens == 1 and angle < self.angle :
@@ -135,16 +157,30 @@ class Avatar:
             self.angle += speed
     
     def center_y(self, speed=0):
-        if self.eyeR.rect.x - self.eyeR.x_origine > 0:
+        if self.eyeR.rect.x - self.eyeR.x_origine > speed +1:
             self.translation_y(0, 0, speed)
-        else :
+        elif self.eyeR.rect.x - self.eyeR.x_origine < -speed -1 :
             self.translation_y(1, 0, speed)
+        else :
+            self.translation_y(1, 0, self.eyeR.rect.x - self.eyeR.x_origine )
+            self.earL.rect.x = self.earL.x_origine
+            self.earR.rect.x = self.earR.x_origine
+            self.scale_x = 1
+            self.earL.image = self.earL.origine
+            self.earR.image = self.earR.origine
 
     def center_x(self, speed=0):
-        if self.eyeR.rect.y - self.eyeR.y_origine < 0:
+        if self.eyeR.rect.y - self.eyeR.y_origine < speed +1:
             self.translation_x(0, 0, speed)
-        else :
+        elif self.eyeR.rect.y - self.eyeR.y_origine > -speed -1 :
             self.translation_x(1, 0, speed)
+        else :
+            self.translation_x(1, 0, self.eyeR.rect.y - self.eyeR.y_origine )
+            self.earL.rect.x = self.earL.x_origine
+            self.earR.rect.x = self.earR.x_origine
+            self.scale_x = 1
+            self.earL.image = self.earL.origine
+            self.earR.image = self.earR.origine
 
     def center_z(self, speed=0):
         if self.angle > speed + 1:

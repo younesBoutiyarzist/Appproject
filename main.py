@@ -185,97 +185,98 @@ while cap.isOpened():
 
     if cv2.waitKey(5) & 0xFF == 27:
         break
-    for i in range(0, 3):
-        # Changing surface color
-        scrn.fill(color)
-        container = pygame.image.load("./assets/empty.png")
 
-        # draw body
-        scrn.blit(avatar.body.image, avatar.body.rect)
+    # Changing surface color
+    scrn.fill(color)
+    container = pygame.image.load("./assets/empty.png")
 
-        # draw earR
-        container.blit(avatar.earR.image, avatar.earR.rect)
+    # draw body
+    scrn.blit(avatar.body.image, avatar.body.rect)
 
-        # draw earL
-        container.blit(avatar.earL.image, avatar.earL.rect)
+    # draw earR
+    container.blit(avatar.earR.image, avatar.earR.rect)
+
+    # draw earL
+    container.blit(avatar.earL.image, avatar.earL.rect)
+
+    # draw head
+    container.blit(avatar.head.image, avatar.head.rect)
+
+    # draw crow
+    container.blit(avatar.crown.image, avatar.crown.rect)
+
+    # draw eyeL
+    container.blit(avatar.eyeL.image, avatar.eyeL.rect)
+
+    # draw eyeR
+    container.blit(avatar.eyeR.image, avatar.eyeR.rect)
+
+    # draw mouth
+    container.blit(avatar.mouth.image, avatar.mouth.rect)
+
+    # draw moustacheR
+    container.blit(avatar.moustacheR.image, avatar.moustacheR.rect)
     
-        # draw head
-        container.blit(avatar.head.image, avatar.head.rect)
+    # draw moustacheL
+    container.blit(avatar.moustacheL.image, avatar.moustacheL.rect)
 
-        # draw crow
-        container.blit(avatar.crown.image, avatar.crown.rect)
-
-        # draw eyeL
-        container.blit(avatar.eyeL.image, avatar.eyeL.rect)
-
-        # draw eyeR
-        container.blit(avatar.eyeR.image, avatar.eyeR.rect)
-
-        # draw mouth
-        container.blit(avatar.mouth.image, avatar.mouth.rect)
-
-        # draw moustacheR
-        container.blit(avatar.moustacheR.image, avatar.moustacheR.rect)
-        
-        # draw moustacheL
-        container.blit(avatar.moustacheL.image, avatar.moustacheL.rect)
-
-        # check mouvement
-        if  y > 8 :
-            avatar.translation_y(1, y, 5)
-        if y < -8 :
-            avatar.translation_y(0, y, 5)
-        if  x > 8 :
-            avatar.translation_x(1, -x,5)
-        if x < -8 :
-            avatar.translation_x(0, -x, 5)
-        if  z > 20 :
-            avatar.rotation(0, z/2.5,2)
-        if z < -20 :
-            avatar.rotation(1, z/2.5, 2)
-        if y > -8 and y < 8 :
-            avatar.center_y(5)
-        if x > -8 and x < 8 :
-            avatar.center_x(5)
-        if z < 20 and z > -20 :
-            avatar.center_z(5)
-        if range_eyeL < 0.01 and open_eyeL :
-            old_size = avatar.eyeL.image.get_width()
-            avatar.eyeL.image = pygame.transform.scale(avatar.eyeL.image, (avatar.eyeL.origine.get_width(), round(avatar.eyeL.origine.get_height()/2)))
-            avatar.eyeL.rect.y += old_size/ 2
-            open_eyeL = False
-        if range_eyeL > 0.01 and not open_eyeL :
-            old_size = avatar.eyeL.image.get_width()
-            avatar.eyeL.image = pygame.transform.scale(avatar.eyeL.image, (avatar.eyeL.origine.get_width(), round(avatar.eyeL.origine.get_height())))
-            avatar.eyeL.rect.y -= old_size/ 2
-            open_eyeL = True
-        if range_eyeR < 0.01 and open_eyeR :
-            old_size = avatar.eyeL.image.get_width()
-            avatar.eyeR.image = pygame.transform.scale(avatar.eyeR.image, (avatar.eyeR.origine.get_width(), round(avatar.eyeR.origine.get_height()/2)))
-            avatar.eyeR.rect.y += old_size/ 2
-            open_eyeR = False
-        if range_eyeR > 0.01 and not open_eyeR :
-            old_size = avatar.eyeR.image.get_width()
-            avatar.eyeR.image = pygame.transform.scale(avatar.eyeR.image, (avatar.eyeR.origine.get_width(), round(avatar.eyeR.origine.get_height())))
-            avatar.eyeR.rect.y -= old_size/ 2
-            open_eyeR = True
-        if range_mouth < 0.04 and not close_mouth :
-            old_size = avatar.mouth.image.get_width()
-            avatar.mouth.image = pygame.transform.scale(avatar.mouth.image, (avatar.mouth.origine.get_width(), round(avatar.mouth.origine.get_height())))
-            avatar.mouth.rect.y += old_size/ 2
-            close_mouth = True
-        if range_mouth > 0.04 and close_mouth :
-            old_size = avatar.eyeL.image.get_width()
-            avatar.mouth.image = pygame.transform.scale(avatar.mouth.image, (avatar.mouth.origine.get_width(), round(avatar.mouth.origine.get_height()/2)))
-            avatar.mouth.rect.y -= old_size/ 2
-            close_mouth = False
-    
-        #avatar.moustacheL.rect.x > 50 and
-        container = pygame.transform.rotate(container, -avatar.angle)
-        container_rect = container.get_rect(center=head_ctr)
-        scrn.blit(container, container_rect)
+    # check mouvement
+    if  y > 8 :
+        avatar.translation_y(1, y, 3)
+    if y < -8 :
+        avatar.translation_y(0, y, 3)
+    if  x > 8 :
+        avatar.translation_x(1, -x, 3)
+    if x < -8 :
+        avatar.translation_x(0, -x, 3)
+    if  z > 20 :
+        avatar.rotation(0, z/2.5, 3)
+    if z < -20 :
+        avatar.rotation(1, z/2.5, 3)
+    if y > -8 and y < 8 :
+        avatar.center_y(3)
+    if x > -8 and x < 8 :
+        avatar.center_x(3)
+    if z < 20 and z > -20 :
+        avatar.center_z(5)
    
-        pygame.display.flip()
+    if range_eyeL < 0.01 and open_eyeL :
+        old_size = avatar.eyeL.image.get_width()
+        avatar.eyeL.image = pygame.transform.scale(avatar.eyeL.image, (avatar.eyeL.origine.get_width(), round(avatar.eyeL.origine.get_height()/2)))
+        avatar.eyeL.rect.y += old_size/ 2
+        open_eyeL = False
+    if range_eyeL > 0.01 and not open_eyeL :
+        old_size = avatar.eyeL.image.get_width()
+        avatar.eyeL.image = pygame.transform.scale(avatar.eyeL.image, (avatar.eyeL.origine.get_width(), round(avatar.eyeL.origine.get_height())))
+        avatar.eyeL.rect.y -= old_size/ 2
+        open_eyeL = True
+    if range_eyeR < 0.01 and open_eyeR :
+        old_size = avatar.eyeL.image.get_width()
+        avatar.eyeR.image = pygame.transform.scale(avatar.eyeR.image, (avatar.eyeR.origine.get_width(), round(avatar.eyeR.origine.get_height()/2)))
+        avatar.eyeR.rect.y += old_size/ 2
+        open_eyeR = False
+    if range_eyeR > 0.01 and not open_eyeR :
+        old_size = avatar.eyeR.image.get_width()
+        avatar.eyeR.image = pygame.transform.scale(avatar.eyeR.image, (avatar.eyeR.origine.get_width(), round(avatar.eyeR.origine.get_height())))
+        avatar.eyeR.rect.y -= old_size/ 2
+        open_eyeR = True
+    if range_mouth < 0.04 and not close_mouth :
+        old_size = avatar.mouth.image.get_width()
+        avatar.mouth.image = pygame.transform.scale(avatar.mouth.origine, (avatar.mouth.origine.get_width(), round(avatar.mouth.origine.get_height())))
+        avatar.mouth.rect.y += old_size/ 2
+        close_mouth = True
+    if range_mouth > 0.04 and close_mouth :
+        old_size = avatar.eyeL.image.get_width()
+        avatar.mouth.image = pygame.transform.scale(avatar.mouth.origine, (avatar.mouth.origine.get_width(), round(avatar.mouth.origine.get_height()/2)))
+        avatar.mouth.rect.y -= old_size/ 2
+        close_mouth = False
+
+    #avatar.moustacheL.rect.x > 50 and
+    container = pygame.transform.rotate(container, -avatar.angle)
+    container_rect = container.get_rect(center=head_ctr)
+    scrn.blit(container, container_rect)
+
+    pygame.display.flip()
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.
     for event in pygame.event.get():
@@ -292,7 +293,7 @@ while cap.isOpened():
         # of the event is KEYDOWN i.e.
         # keyboard button is pressed
         if event.type == pygame.KEYDOWN:
-            avatar.pressed[event.key] = True
+            avatar.earR.rect.x = avatar.earR.rect.x + 10
         elif event.type == pygame.KEYUP:
             avatar.pressed[event.key] = False
 

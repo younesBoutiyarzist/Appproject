@@ -11,24 +11,21 @@ class Ear(pygame.sprite.Sprite):
         self.x_origine = None
         self.y_origine = None
         self.angle = 0
+        self.scale_x = 1.0
 
     def move_right(self, pos, speed=0):
-        if self.rect.x < self.x_origine + pos :
-            self.rect.x += self.velocity
-            self.rect.x += speed
+        self.rect.x += self.velocity
+        self.rect.x += speed
 
     def move_left(self, pos, speed=0):
-        if self.rect.x > self.x_origine + pos :
-            self.rect.x -= self.velocity
-            self.rect.x -= speed
+        self.rect.x -= self.velocity
+        self.rect.x -= speed
 
     def move_up(self,pos, speed=0):
-        if self.rect.y > self.y_origine + pos :
             self.rect.y -= self.velocity
             self.rect.y -= speed
 
     def move_down(self,pos, speed=0):
-        if self.rect.y <self.y_origine + pos :
             self.rect.y += self.velocity
             self.rect.y += speed
 
