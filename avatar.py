@@ -99,8 +99,8 @@ class Avatar:
         self.pressed = {}
 
     def translation_y(self, sens, pos, speed=0):
+        speed = abs((pos + self.eyeL.x_origine) - self.eyeL.rect.x)/2
         if sens == 1:
-            self.action = 'translation_y_sens1'
             self.eyeL.move_right(pos + 2, speed)
             self.eyeR.move_right(pos + 2, speed)
             self.mouth.move_right(pos, speed)
@@ -112,7 +112,6 @@ class Avatar:
                 self.earR.move_left(pos/2, speed/2)
             
         elif sens == 0:
-            self.action = 'translation_y_sens0'
             self.eyeL.move_left(pos, speed)
             self.eyeR.move_left(pos, speed)
             self.mouth.move_left(pos, speed)
@@ -124,6 +123,7 @@ class Avatar:
                 self.earR.move_right(pos/2, speed/2)
             
     def translation_x(self, sens, pos, speed=0):
+        speed = abs((pos + self.eyeL.x_origine) - self.eyeL.rect.x)/2
         if sens == 1:
             self.eyeL.move_up(pos, speed)
             self.eyeR.move_up(pos, speed)
@@ -148,7 +148,7 @@ class Avatar:
             if self.eyeR.rect.y < self.eyeR.y_origine + pos :
                 self.earR.move_up(pos/2, speed/2)
                 self.earL.move_up(pos/2, speed/2)
-            self.action = 'translation_x_sens0'
+            
 
     def rotation(self, sens, angle,  speed=1):
         if sens == 1 and angle < self.angle :
@@ -176,8 +176,8 @@ class Avatar:
             self.translation_x(1, 0, speed)
         else :
             self.translation_x(1, 0, self.eyeR.rect.y - self.eyeR.y_origine )
-            self.earL.rect.x = self.earL.x_origine
-            self.earR.rect.x = self.earR.x_origine
+            self.earL.rect.y = self.earL.y_origine
+            self.earR.rect.y = self.earR.y_origine
             self.scale_x = 1
             self.earL.image = self.earL.origine
             self.earR.image = self.earR.origine
